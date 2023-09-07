@@ -56,6 +56,9 @@ def title_list(user_input: str):
     # 데이터베이스 세션 닫기
     db.close()
 
+    for title, similarity in result.items():
+        result[title] = str(similarity)
+
     return result
 
 # 새로운 엔드포인트를 정의합니다.
@@ -90,6 +93,9 @@ def recommend_titles(summary_input: str):
             "similarity": similarity
         } for title, similarity in sorted_similarity[:5]]
     }
+
+    for title, similarity in result.items():
+        result[title] = str(similarity)
 
     # 데이터베이스 세션 닫기
     db.close()
