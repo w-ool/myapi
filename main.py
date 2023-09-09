@@ -5,10 +5,7 @@ from domain import title_router
 
 app = FastAPI()
 
-origins = [
-    "http://127.0.0.1:5173",
-    "http://223.130.138.51:8000",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
