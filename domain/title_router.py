@@ -13,9 +13,6 @@ def title_list(user_input: str):
     # 데이터베이스 세션 열기
     db = SessionLocal()
 
-    # 입력값에서 공백 제거
-    # user_input = user_input.replace(" ", "")
-
     # 유사도 계산 및 결과 저장할 딕셔너리
     similarity_dict = {}
 
@@ -44,20 +41,16 @@ def title_list(user_input: str):
             sorted_similarity.pop(0)
 
         # 상위 5개 결과 반환 (벡터값을 포함하지 않음)
-        result = {
-            "similar_titles": [{
+        result = [{
                 "title": title,
-                "similarity": similarity
+                "similarity": str(similarity)
             } for title, similarity in sorted_similarity[:5]]
-        }
+
     else:
         result = {"message": "작품을 찾을 수 없습니다. 줄거리를 입력해주세요."}
 
     # 데이터베이스 세션 닫기
     db.close()
-
-    for title, similarity in result.items():
-        result[title] = str(similarity)
 
     return result
 
@@ -87,15 +80,10 @@ def recommend_titles(summary_input: str):
     sorted_similarity = sorted(similarity_dict.items(), key=lambda x: x[1], reverse=True)
 
     # 상위 5개 결과 반환
-    result = {
-        "recommended_titles": [{
-            "title": title,
-            "similarity": similarity
-        } for title, similarity in sorted_similarity[:5]]
-    }
-
-    for title, similarity in result.items():
-        result[title] = str(similarity)
+    result = [{
+        "title": title,
+        "similarity": str(similarity)
+    } for title, similarity in sorted_similarity[:5]]
 
     # 데이터베이스 세션 닫기
     db.close()
