@@ -59,7 +59,7 @@ def title_list(user_input: str):
     for title, similarity in result.items():
         result[title] = str(similarity)
 
-    return json.dumps(result)
+    return result
 
 # 새로운 엔드포인트를 정의합니다.
 @router.get("/recommend")
@@ -100,4 +100,4 @@ def recommend_titles(summary_input: str):
     # 데이터베이스 세션 닫기
     db.close()
 
-    return json.dumps(result)
+    return result
